@@ -1,6 +1,8 @@
 <?php
 namespace TinyORM\Mapper;
 
+use TinyORM\Entity\User as UserEntity;
+
 class User
 {
     private $mapping = [
@@ -11,7 +13,7 @@ class User
         'namePrefix' => 'name_prefix',
     ];
 
-    public function populate($data, $user)
+    public function populate(array $data, UserEntity $user)
     {
         $mappingsFlipped = array_flip($this->mapping);
         foreach ($data as $key => $value) {

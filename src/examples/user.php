@@ -1,6 +1,6 @@
 <?php
-include('../TinyORM/Entity/User.php');
-include('../TinyORM/Mapper/User.php');
+include_once('../TinyORM/Entity/User.php');
+include_once('../TinyORM/Mapper/User.php');
 
 $db = new \PDO('mysql:host=localhost;dbname=app','root','');
 $userData = $db->query('SELECT * FROM users WHERE id=1')->fetch();
