@@ -1,5 +1,5 @@
 <?php
-namespace Entity;
+namespace TinyORM\Entity;
 
 class User
 {
