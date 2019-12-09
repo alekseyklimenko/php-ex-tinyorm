@@ -26,4 +26,15 @@ class User
         }
         return $user;
     }
+
+    public function extract(UserEntity $user)
+    {
+        $data = [];
+        foreach ($this->mapping as $keyObject => $keyColumn) {
+            if ($keyColumn != 'id') {
+                $data[$keyColumn] = call_user_func([$user, 'get' . ucfirst($keyObject)]);
+            }
+        }
+        return $data;
+    }
 }

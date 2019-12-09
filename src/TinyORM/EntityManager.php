@@ -2,6 +2,8 @@
 include_once('Repository/User.php');
 
 use TinyORM\Repository\User as UserRepository;
+use TinyORM\Mapper\User as UserMapper;
+use TinyORM\Entity\User as UserEntity;
 
 class EntityManager
 {
@@ -26,6 +28,15 @@ class EntityManager
     public function query($stmt)
     {
         return $this->connection->query($stmt);
+    }
+
+    public function saveUser(UserEntity $user)
+    {
+        $userMapper = new UserMapper();
+        $data = $userMapper->extract($user);
+        $columnsString = implode(', ', array_keys($data));
+        $valuesString = implode("', '", array_map('mysql_real_escape_string', $data));
+        return $this->query("INSERT INTO users ($columnsString) VALUES('$valuesString')");
     }
 
     public function getUserRepository()
