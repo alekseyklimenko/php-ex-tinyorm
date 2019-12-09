@@ -1,4 +1,5 @@
 <?php
+// A self-made ORM
 include_once('../TinyORM/Entity/User.php');
 include_once('../TinyORM/Mapper/User.php');
 include_once('../TinyORM/EntityManager.php');
@@ -17,6 +18,8 @@ echo $user->assembleDisplayName();
 $em = new EntityManager('localhost', 'app', 'root', '');
 $user = $em->getUserRepository()->findOneById(1);
 echo $user->assembleDisplayName();
+$user->setFirstName('Alex');
+$em->saveUser($user);
 
 //add a new record
 $newUser = new TinyORM\Entity\User();

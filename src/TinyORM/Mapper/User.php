@@ -37,4 +37,9 @@ class User
         }
         return $data;
     }
+
+    public function getIdColumn()
+    {
+        return $this->mapping['id'];
+    }
 }

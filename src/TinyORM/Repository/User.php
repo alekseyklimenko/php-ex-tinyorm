@@ -21,7 +21,12 @@ class User
 
     public function findOneById($id)
     {
-        $userData = $this->em->query('SELECT * FROM users WHERE id=' . $id)->fetch();
-        return $this->mapper->populate($userData, new UserEntity());
+        $user = $this->em->getUserEntity($id);
+        if (!$user) {
+            $userData = $this->em->query('SELECT * FROM users WHERE id=' . $id)->fetch();
+            $user = $this->mapper->populate($userData, new UserEntity());
+            $this->em->registerUserEntity($id, $user);
+        }
+        return $user;
     }
 }
