@@ -28,3 +28,8 @@ $newUser->setLastName('Ivanov');
 $newUser->setGender(1);
 $em->saveUser($newUser);
 echo $newUser->assembleDisplayName();
+
+//show user posts
+foreach ($user->getPosts() as $post) {
+    echo $post->getTitle() . "\n";
+}

@@ -1,38 +1,36 @@
 <?php
 namespace TinyORM\Mapper;
 
-use TinyORM\Entity\User as UserEntity;
+use TinyORM\Entity\Post as PostEntity;
 
-class User
+class Post
 {
     private $mapping = [
         'id' => 'id',
-        'firstName' => 'first_name',
-        'lastName' => 'last_name',
-        'gender' => 'gender',
-        'namePrefix' => 'name_prefix',
+        'title' => 'title',
+        'content' => 'content',
     ];
 
-    public function populate(array $data, UserEntity $user)
+    public function populate(array $data, PostEntity $post)
     {
         $mappingsFlipped = array_flip($this->mapping);
         foreach ($data as $key => $value) {
             if (isset($mappingsFlipped[$key])) {
                 call_user_func_array(
-                    [$user, 'set' . ucfirst($mappingsFlipped[$key])],
+                    [$post, 'set' . ucfirst($mappingsFlipped[$key])],
                     [$value]
                 );
             }
         }
-        return $user;
+        return $post;
     }
 
-    public function extract(UserEntity $user)
+    public function extract(PostEntity $post)
     {
         $data = [];
         foreach ($this->mapping as $keyObject => $keyColumn) {
             if ($keyColumn != $this->getIdColumn()) {
-                $data[$keyColumn] = call_user_func([$user, 'get' . ucfirst($keyObject)]);
+                $data[$keyColumn] = call_user_func([$post, 'get' . ucfirst($keyObject)]);
             }
         }
         return $data;

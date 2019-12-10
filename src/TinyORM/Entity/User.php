@@ -1,6 +1,8 @@
 <?php
 namespace TinyORM\Entity;
 
+use TinyORM\Repository\Post as PostRepository;
+
 class User
 {
     private $id;
@@ -8,6 +10,9 @@ class User
     private $lastName;
     private $gender;
     private $namePrefix;
+    /** @var PostRepository */
+    private $postRepository;
+    private $posts = null;
 
     const GENDER_MALE = 0;
     const GENDER_FEMALE = 1;
@@ -29,6 +34,14 @@ class User
         }
         $displayName .= ' ' . $this->firstName . ' ' . $this->lastName;
         return $displayName;
+    }
+
+    public function getPosts()
+    {
+        if (is_null($this->posts)) {
+            $this->posts = $this->postRepository->findByUser($this);
+        }
+        return $this->posts;
     }
 
     public function setFirstName($firstName)
@@ -79,5 +92,10 @@ class User
     public function getNamePrefix()
     {
         return $this->namePrefix;
+    }
+
+    public function setPostRepository(PostRepository $postRepository)
+    {
+        $this->postRepository = $postRepository;
     }
 }

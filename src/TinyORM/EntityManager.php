@@ -4,6 +4,7 @@ include_once('Repository/User.php');
 use TinyORM\Repository\User as UserRepository;
 use TinyORM\Mapper\User as UserMapper;
 use TinyORM\Entity\User as UserEntity;
+use TinyORM\Repository\Post as PostRepository;
 
 class EntityManager
 {
@@ -14,6 +15,7 @@ class EntityManager
     /** @var \PDO */
     private $connection;
     private $userRepository;
+    private $postRepository;
     private $identityMap;
 
     public function __construct($host, $db, $user, $pwd)
@@ -59,6 +61,14 @@ class EntityManager
             $this->userRepository = new UserRepository($this);
         }
         return $this->userRepository;
+    }
+
+    public function getPostRepository()
+    {
+        if (is_null($this->postRepository)) {
+            $this->postRepository = new PostRepository($this);
+        }
+        return $this->postRepository;
     }
 
     public function registerUserEntity($id, $user)

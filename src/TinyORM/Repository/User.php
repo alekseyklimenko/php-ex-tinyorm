@@ -24,8 +24,9 @@ class User
         $user = $this->em->getUserEntity($id);
         if (!$user) {
             $userData = $this->em->query('SELECT * FROM users WHERE id=' . $id)->fetch();
-            $user = $this->mapper->populate($userData, new UserEntity());
-            $this->em->registerUserEntity($id, $user);
+            $user = new UserEntity();
+            $user->setPostRepository($this->em->getPostRepository());
+            $this->em->registerUserEntity($id, $this->mapper->populate($userData, $user));
         }
         return $user;
     }
